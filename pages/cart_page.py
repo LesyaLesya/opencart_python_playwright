@@ -45,7 +45,10 @@ class CartPage(BasePage):
 
     @allure.step('Проверить, что цена обновилась')
     def check_updating_price(self, value):
-        """Проверка обновленной цены."""
+        """Проверка обновленной цены.
+
+        :param value: количество товара
+        """
 
         with allure.step('Получить цену за единицу товара'):
             unit_price = self.get_text_of_element(CartPageLocators.UNIT_PRICE)

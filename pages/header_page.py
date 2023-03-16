@@ -105,7 +105,10 @@ class HeaderPage(BasePage):
 
     @allure.step('Проверить значения валют в выпадающем списке')
     def check_currency_values(self, lst):
-        """Проверка значений валют."""
+        """Проверка значений валют.
+
+        :param lst: список названий валют
+        """
 
         elements = self._element(HeaderPageLocators.CURRENCY_VALUES_BUTTONS)
         names = [self.get_text_of_element(HeaderPageLocators.CURRENCY_VALUES_BUTTONS, index=i) for i in range(elements.count())]
@@ -115,7 +118,10 @@ class HeaderPage(BasePage):
 
     @allure.step('Выбрать значение валюты {value}')
     def choose_currency(self, value):
-        """Выбор значения валюты."""
+        """Выбор значения валюты.
+
+        :param value: значение валюты
+        """
 
         self.click_on_currency_drop_down()
         elements = self._element(HeaderPageLocators.CURRENCY_VALUES_BUTTONS)
@@ -123,7 +129,7 @@ class HeaderPage(BasePage):
             element = self.get_text_of_element(HeaderPageLocators.CURRENCY_VALUES_BUTTONS, index=i)
             if element == value:
                 with allure.step(f'Кликнуть по значению валюты {value}'):
-                    return self.click_on_element(HeaderPageLocators.CURRENCY_VALUES_BUTTONS, index=i)
+                    self.click_on_element(HeaderPageLocators.CURRENCY_VALUES_BUTTONS, index=i)
 
     @allure.step('Навести на раздел главного меню и проверить, что есть выпадашка')
     def check_dropdown_menu(self, menu_locator, dropdown_locator):

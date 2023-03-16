@@ -27,6 +27,7 @@ class AdminPage(BasePage):
         """Логин в админку.
 
         :param name: имя пользователя
+        :param name: пароль пользователя
         """
         self.input_text(AdminPageLocators.USERNAME_INPUT, name)
         self.input_text(AdminPageLocators.PASSWORD_INPUT, passw)

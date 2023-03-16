@@ -12,7 +12,10 @@ class FooterPage(BasePage):
 
     @allure.step('Проверить ссылки в подвале')
     def check_footer_links(self, lst):
-        """Проверка ссылок в подвале."""
+        """Проверка ссылок в подвале.
+
+        :param lst: список названий ссылок
+        """
 
         elements = self._element(FooterPageLocators.LINKS)
         links_text = [self.get_text_of_element(FooterPageLocators.LINKS, index=i) for i in range(elements.count())]

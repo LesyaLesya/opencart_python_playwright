@@ -18,7 +18,10 @@ class AccountPage(BasePage):
 
     @allure.step('Проверить, что товар в виш-листе')
     def check_item_in_wish_list(self, name):
-        """Проверка видимости товара в вишлисте."""
+        """Проверка видимости товара в вишлисте.
+
+        :param name: название товара
+        """
 
         elements = self._element(AccountPageLocators.ITEM_NAMES)
         for i in range(elements.count()):

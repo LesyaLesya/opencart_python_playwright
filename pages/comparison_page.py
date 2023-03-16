@@ -11,7 +11,10 @@ class ComparisonPage(BasePage):
 
     @allure.step('Проверить, что товар в сравнении')
     def check_item_in_comparison(self, name):
-        """Проверка видимости товара в сравнении."""
+        """Проверка видимости товара в сравнении.
+
+        :param name: название товара
+        """
 
         elements = self._element(ComparePageLocators.ITEM_NAMES)
         for i in range(elements.count()):
