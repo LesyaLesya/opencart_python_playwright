@@ -13,7 +13,7 @@ from helpers import allure_helper
 def pytest_addoption(parser):
     """Получение аргументов из командной строки."""
     parser.addoption(
-        '--url', action="store", required=True, help='Укажите url приложения')
+        '--url', action='store', required=True, help='Укажите url приложения')
     parser.addoption(
         '--head', action='store_false', help='Запуск в headless режиме: если указан, то запуск в режиме headed')
     parser.addoption(
