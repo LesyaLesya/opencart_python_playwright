@@ -71,7 +71,7 @@ def browser(get_playwright, request):
 @pytest.fixture
 def db_connection(request):
     """Подключение к БД."""
-    db_host = request.config.getoption("--url")
+    db_host = request.config.getoption('--url')
     config = SimpleNamespace(
         DB_NAME='bitnami_opencart',
         HOST=db_host,

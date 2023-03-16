@@ -28,7 +28,7 @@ class AccountPage(BasePage):
     def logout_from_right_block(self,):
         """Логаут из правого блока."""
 
-        return self.click_on_element(AccountPageLocators.LOGOUT_RIGHT_BLOCK)
+        self.click_on_element(AccountPageLocators.LOGOUT_RIGHT_BLOCK)
 
     @allure.step('Проверка текста после логаута')
     def check_text_after_logout(self):

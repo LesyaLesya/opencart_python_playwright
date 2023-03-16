@@ -19,7 +19,7 @@ class BasePage:
         self.db_connection = db_connection
 
     def open_url(self, path='/'):
-        """Открытие url методом get.
+        """Открытие url.
 
         :param path: путь
         """

@@ -22,16 +22,16 @@ class CataloguePage(BasePage):
         for i in lst:
             self.is_element_visible(i)
 
-    @allure.step('Добавить товар с индексом {idx} в сравнение')
-    def add_to_compare(self, idx):
+    @allure.step('Добавить товар с индексом {index} в сравнение')
+    def add_to_compare(self, index):
         """Добавление товара в сравнение. Возвращает название
         добавленного товара.
 
-        :param idx: порядковый индекс
+        :param index: порядковый индекс
         """
 
-        name = self.get_text_of_element(CataloguePageLocators.ITEM_NAME, idx)
-        self.click_on_element(CataloguePageLocators.COMPARE_BUTTON, idx)
+        name = self.get_text_of_element(CataloguePageLocators.ITEM_NAME, index)
+        self.click_on_element(CataloguePageLocators.COMPARE_BUTTON, index)
         return name
 
     @allure.step('Кликнуть на кнопку Сравнения в алерте')
@@ -144,15 +144,19 @@ class CataloguePage(BasePage):
                 assert 'product-grid' in attr, f'Значение атрибута -  {attr}'
 
     @allure.step('Сравнить символ в ценах товаров с символом выбранной валюты')
-    def check_currency_in_price(self, idx, symbol):
-        """Проверка отображения значка валюты в ценах."""
+    def check_currency_in_price(self, index, symbol):
+        """Проверка отображения значка валюты в ценах.
+
+        :param index: порядковый индекс элемента
+        :param symbol: символ валюты
+        """
 
         elements = self._element(CataloguePageLocators.ITEM_PRICE)
         prices_with_tax = [(self.get_text_of_element(CataloguePageLocators.ITEM_PRICE, index=i)).strip() for i in
                            range(elements.count())]
         prices_without_tax = [i.split('\n')[0] for i in prices_with_tax]
         with allure.step(f'Проверить, что во всех ценах {prices_without_tax} символ {symbol}'):
-            assert all([i[idx] == symbol for i in prices_without_tax]), f'{prices_without_tax} - список цен'
+            assert all([i[index] == symbol for i in prices_without_tax]), f'{prices_without_tax} - список цен'
 
     @allure.step('Проверить стиль кнопки добавления в корзину без наведения')
     def check_add_to_cart_css(self):
@@ -179,6 +183,9 @@ class CataloguePage(BasePage):
 
     @allure.step('Проверить заголовок страницы каталога')
     def check_catalogue_page_header(self, name):
-        """Проверка заголовка страницы каталога."""
+        """Проверка заголовка страницы каталога.
+
+        :param name: название страницы каталога
+        """
 
         self.is_having_text(CataloguePageLocators.CATALOGUE_HEADER, name)
