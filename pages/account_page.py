@@ -25,12 +25,12 @@ class AccountPage(BasePage):
         for i in range(elements.count()):
             self.is_having_text(AccountPageLocators.ITEM_NAMES, name, i)
 
-    @allure.step('Логаут из правого блока')
+    @allure.step('Выполнить логаут из правого блока')
     def logout_from_right_block(self,):
         """Логаут из правого блока."""
         self.click_on_element(AccountPageLocators.LOGOUT_RIGHT_BLOCK)
 
-    @allure.step('Проверка текста после логаута')
+    @allure.step('Проверить текст после логаута')
     def check_text_after_logout(self):
         """Проверка текста после логаута."""
         self.is_element_visible(AccountPageLocators.TEXT_AFTER_LOGOUT)
@@ -38,13 +38,13 @@ class AccountPage(BasePage):
             AccountPageLocators.TEXT_AFTER_LOGOUT,
             'You have been logged off your account. It is now safe to leave the computer.')
 
-    @allure.step('Проверка пунктов в правом блоке после логаута')
+    @allure.step('Проверить пункты в правом блоке после логаута')
     def check_right_block_after_logout(self):
         """Проверка пунктов в правом блоке после логаута."""
         self.is_element_visible(AccountPageLocators.REGISTER_RIGHT_BLOCK)
         self.is_element_visible(AccountPageLocators.LOGIN_RIGHT_BLOCK)
 
-    @allure.step('Заход в аккаунт после логаута')
+    @allure.step('Зайти в аккаунт после логаута')
     def click_my_account_after_logout(self, db_connection, email, fistname, del_user=True):
         """Заход в аккаунт после логаута."""
         self.click_on_element(AccountPageLocators.MY_ACCOUNT_RIGHT_BLOCK)
