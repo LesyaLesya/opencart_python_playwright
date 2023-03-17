@@ -13,7 +13,6 @@ class CataloguePage(BasePage):
     @allure.step('Проверить видимость элементов на странице')
     def check_elements_visibility(self):
         """Проверка видимости элементов."""
-
         lst = [CataloguePageLocators.BREADCRUMB,
                CataloguePageLocators.CATALOGUE_HEADER,
                CataloguePageLocators.CATALOGUE_IMAGE,
@@ -29,7 +28,6 @@ class CataloguePage(BasePage):
 
         :param index: порядковый индекс
         """
-
         name = self.get_text_of_element(CataloguePageLocators.ITEM_NAME, index)
         self.click_on_element(CataloguePageLocators.COMPARE_BUTTON, index)
         return name
@@ -37,7 +35,6 @@ class CataloguePage(BasePage):
     @allure.step('Кликнуть на кнопку Сравнения в алерте')
     def go_to_compare_page(self):
         """Клик по ссылке Сравнения."""
-
         self.click_on_element(CataloguePageLocators.COMPARE_LINK)
 
     @allure.step('Проверить, что товар добавился к сравнению - значение в ссылке увеличилось на {value}')
@@ -55,14 +52,12 @@ class CataloguePage(BasePage):
 
         :param txt: значения в выпадающем списке
         """
-
         self.select_products(CataloguePageLocators.SELECT_SORT, label=txt)
 
     @allure.step('Проверить, что товары отсортированы от A до Z')
     def check_sort_by_name_a_z(self):
         """Получение всех названий товаров после сортировки и проверка
         заданной сортировки."""
-
         elements = self._element(CataloguePageLocators.ITEM_NAME)
         names = [self.get_text_of_element(CataloguePageLocators.ITEM_NAME, index=i) for i in range(elements.count())]
         with allure.step(f'Проверить порядок в списке названий {names}'):
@@ -72,7 +67,6 @@ class CataloguePage(BasePage):
     def check_sort_by_name_z_a(self):
         """Получение всех названий товаров после сортировки и проверка
         заданной сортировки."""
-
         elements = self._element(CataloguePageLocators.ITEM_NAME)
         names = [self.get_text_of_element(CataloguePageLocators.ITEM_NAME, index=i) for i in range(elements.count())]
         with allure.step(f'Проверить порядок в списке названий {names}'):
@@ -82,7 +76,6 @@ class CataloguePage(BasePage):
     def check_sort_by_price_low_high(self):
         """Получение всех цен товаров после сортировки и проверка
         заданной сортировки."""
-
         elements = self._element(CataloguePageLocators.ITEM_PRICE)
         prices_with_tax = [(self.get_text_of_element(CataloguePageLocators.ITEM_PRICE, index=i)).strip() for i in range(elements.count())]
         prices_without_tax = [i.split('\n')[0] for i in prices_with_tax]
@@ -91,26 +84,24 @@ class CataloguePage(BasePage):
             assert all(prices_in_float[i] <= prices_in_float[i+1] for i in range(len(prices_in_float)-1)), \
                 f'Порядок цен - {prices_in_float}'
 
-    @allure.step('Перейти в карточку продукта со страницы каталога')
+    @allure.step('Перейти в карточку продукта с индексом {index} со страницы каталога')
     def go_to_product_from_catalogue(self, index):
         """Клик по товару из каталога.
         Возвращает название товара.
 
         :param index: порядковый индекс элемента
         """
-
         name = self.get_text_of_element(CataloguePageLocators.ITEM_NAME, index)
         self.click_on_element(CataloguePageLocators.ITEM_NAME, index)
         return name
 
-    @allure.step('Добавить продукт в виш лист')
+    @allure.step('Добавить продукт с индексом {index} в виш лист')
     def add_to_wishlist(self, index):
         """Добавление товара в вишлист. Возвращает название
         добавленного товара.
 
         :param index: порядковый индекс элемента
         """
-
         name = self.get_text_of_element(CataloguePageLocators.ITEM_NAME, index)
         self.click_on_element(CataloguePageLocators.WISH_LIST_BUTTON, index)
         return name
@@ -118,13 +109,11 @@ class CataloguePage(BasePage):
     @allure.step('Кликнуть на кнопку Логина в алерте')
     def click_login_from_alert(self):
         """Клик по кнопке Логина в алерте."""
-
         self.click_on_element(CataloguePageLocators.LOGIN_LINK_IN_ALERT)
 
     @allure.step('Кликнуть на кнопку вида Список')
     def click_list_view(self):
         """Клик по кнопке с видом списка и проверка изменения вида."""
-
         elements = self._element(CataloguePageLocators.ITEM_CART)
         self.click_on_element(CataloguePageLocators.LIST_VIEW_BUTTON)
         for i in range(elements.count()):
@@ -135,7 +124,6 @@ class CataloguePage(BasePage):
     @allure.step('Кликнуть на кнопку вида Сетка')
     def click_list_grid(self):
         """Клик по кнопке с видом сетки и проверка изменения вида."""
-
         elements = self._element(CataloguePageLocators.ITEM_CART)
         self.click_on_element(CataloguePageLocators.GRID_VIEW_BUTTON)
         for i in range(elements.count()):
@@ -150,7 +138,6 @@ class CataloguePage(BasePage):
         :param index: порядковый индекс элемента
         :param symbol: символ валюты
         """
-
         elements = self._element(CataloguePageLocators.ITEM_PRICE)
         prices_with_tax = [(self.get_text_of_element(CataloguePageLocators.ITEM_PRICE, index=i)).strip() for i in
                            range(elements.count())]
@@ -161,7 +148,6 @@ class CataloguePage(BasePage):
     @allure.step('Проверить стиль кнопки добавления в корзину без наведения')
     def check_add_to_cart_css(self):
         """Проверка стилей кнопки добавления в корзину без наведения."""
-
         locator = CataloguePageLocators.ADD_TO_CART_BUTTON
         elements = self._element(locator)
         for i in range(elements.count()):
@@ -172,7 +158,6 @@ class CataloguePage(BasePage):
     @allure.step('Проверить стиль кнопки добавления в корзину с наведением')
     def check_add_to_cart_css_hover(self):
         """Проверка стилей кнопки добавления в корзину с наведением."""
-
         locator = CataloguePageLocators.ADD_TO_CART_BUTTON
         elements = self._element(locator)
         for i in range(elements.count()):
@@ -187,5 +172,4 @@ class CataloguePage(BasePage):
 
         :param name: название страницы каталога
         """
-
         self.is_having_text(CataloguePageLocators.CATALOGUE_HEADER, name)

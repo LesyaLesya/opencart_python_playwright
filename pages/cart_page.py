@@ -15,7 +15,6 @@ class CartPage(BasePage):
 
         :param name: название товара
         """
-
         elements = self._element(CartPageLocators.ITEM_NAMES)
         for i in range(elements.count()):
             with allure.step(f'Проверить, что продукт с индексом {i} в корзине'):
@@ -24,13 +23,11 @@ class CartPage(BasePage):
     @allure.step('Удалить товар из корзины')
     def remove_product_from_cart(self):
         """Проверка удаления товаров из корзины."""
-
         self.click_on_element(CartPageLocators.REMOVE_BUTTONS)
 
     @allure.step('Проверить, что корзина пуста')
     def check_empty_cart(self):
         """Проверка удаления товаров из корзины."""
-
         self.is_having_text(CartPageLocators.TEXT_EMPTY_CART, 'Your shopping cart is empty!')
 
     @allure.step('Обновить цену, указав количество {value}')
@@ -39,7 +36,6 @@ class CartPage(BasePage):
 
         :param value: количество товара
         """
-
         self.input_text(CartPageLocators.QUANTITY_INPUT, str(value))
         self.click_on_element(CartPageLocators.QUANTITY_REFRESH_BUTTON)
 
@@ -49,7 +45,6 @@ class CartPage(BasePage):
 
         :param value: количество товара
         """
-
         with allure.step('Получить цену за единицу товара'):
             unit_price = self.get_text_of_element(CartPageLocators.UNIT_PRICE)
         unit_price_in_float = float(unit_price.replace('$', ''))
@@ -63,5 +58,4 @@ class CartPage(BasePage):
     @allure.step('Нажать на кнопку возврата к покупкам')
     def click_continue_shopping(self):
         """Проверка нажатия на кнопку возврата к покупкам."""
-
         self.click_on_element(CartPageLocators.CONTINUE_SHOPPING_BUTTON)

@@ -16,7 +16,6 @@ class FooterPage(BasePage):
 
         :param lst: список названий ссылок
         """
-
         elements = self._element(FooterPageLocators.LINKS)
         links_text = [self.get_text_of_element(FooterPageLocators.LINKS, index=i) for i in range(elements.count())]
         with allure.step(f'Проверить, что тексты ссылок {links_text} совпадают с {lst}'):

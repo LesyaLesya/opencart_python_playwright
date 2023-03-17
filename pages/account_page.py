@@ -2,9 +2,9 @@
 
 import allure
 
-from pages.base_page import BasePage
-from helpers.locators import AccountPageLocators
 from helpers.db_helper import del_user_from_bd
+from helpers.locators import AccountPageLocators
+from pages.base_page import BasePage
 
 
 class AccountPage(BasePage):
@@ -13,7 +13,6 @@ class AccountPage(BasePage):
     @allure.step('Открыть виш-лист')
     def open_wishlist(self):
         """Открытие вишлиста."""
-
         self.click_on_element(AccountPageLocators.WISH_LIST_LINK)
 
     @allure.step('Проверить, что товар в виш-листе')
@@ -22,7 +21,6 @@ class AccountPage(BasePage):
 
         :param name: название товара
         """
-
         elements = self._element(AccountPageLocators.ITEM_NAMES)
         for i in range(elements.count()):
             self.is_having_text(AccountPageLocators.ITEM_NAMES, name, i)
@@ -30,13 +28,11 @@ class AccountPage(BasePage):
     @allure.step('Логаут из правого блока')
     def logout_from_right_block(self,):
         """Логаут из правого блока."""
-
         self.click_on_element(AccountPageLocators.LOGOUT_RIGHT_BLOCK)
 
     @allure.step('Проверка текста после логаута')
     def check_text_after_logout(self):
         """Проверка текста после логаута."""
-
         self.is_element_visible(AccountPageLocators.TEXT_AFTER_LOGOUT)
         self.is_having_text(
             AccountPageLocators.TEXT_AFTER_LOGOUT,

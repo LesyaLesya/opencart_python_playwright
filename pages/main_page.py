@@ -12,7 +12,6 @@ class MainPage(BasePage):
     @allure.step('Проверить видимость элементов на странице')
     def check_elements_visibility(self):
         """Проверка видимости элементов."""
-
         lst = [MainPageLocators.BANNER,
                MainPageLocators.BANNER_PAGINATION_BULLETS,
                MainPageLocators.HEADER_FEATURED,
@@ -24,7 +23,6 @@ class MainPage(BasePage):
     @allure.step('Кликнуть по выбранной кнопке под баннером')
     def click_banner_bullet_active(self):
         """Клик по активной/выбранной кнопке переключения баннера."""
-
         if self.getting_attr(
                 'class', MainPageLocators.BANNER_BULLET, 0) == \
                 'swiper-pagination-bullet swiper-pagination-bullet-active':
@@ -39,7 +37,6 @@ class MainPage(BasePage):
     @allure.step('Кликнуть по невыбранной кнопке под баннером')
     def click_banner_bullet_inactive(self):
         """Клик по невыбранной кнопке переключения баннера."""
-
         if self.getting_attr(
                 'class', MainPageLocators.BANNER_BULLET, 0) == \
                 'swiper-pagination-bullet swiper-pagination-bullet-active':
@@ -58,7 +55,6 @@ class MainPage(BasePage):
 
         :param index: порядковый индекс элемента
         """
-
         name = self.get_text_of_element(MainPageLocators.FEATURED_PRODUCT_NAME, index)
         self.click_on_element(MainPageLocators.FEATURED_PRODUCT_LINK, index)
         return name
@@ -66,7 +62,6 @@ class MainPage(BasePage):
     @allure.step('Кликнуть по кнопкам переключения карусели брендов')
     def click_carousel_bullet(self):
         """Клик по кнопкам переключения карусели."""
-
         with allure.step('Получить все элементы из карусели'):
             elements = self._element(MainPageLocators.BRAND_IMAGE_IN_CAROUSEL)
         with allure.step('Кликнуть поочереди по кнопкам карусели'):
@@ -79,7 +74,7 @@ class MainPage(BasePage):
                             with allure.step(f'Проверить, что атрибут {attr} равен {i}'):
                                 if attr == str(i):
                                     with allure.step('Получить список атрибутов класса элемента'):
-                                        actual_class = elements.nth(k).get_attribute("class").split()
+                                        actual_class = elements.nth(k).get_attribute('class').split()
                                         with allure.step(f'Проверить классы {actual_class}'):
                                             assert 'swiper-slide-active' or 'swiper-slide-duplicate-active' \
                                                    in actual_class, f'Класс - {actual_class}'

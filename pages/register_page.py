@@ -13,7 +13,6 @@ class RegisterPage(BasePage):
     @allure.step('Проверить видимость элементов на странице')
     def check_elements_visibility(self):
         """Проверка видимости элементов."""
-
         lst = [RegisterPageLocators.HEADER,
                RegisterPageLocators.TEXT_FOR_LOGIN,
                RegisterPageLocators.FIRST_NAME_FIELD,
@@ -34,8 +33,16 @@ class RegisterPage(BasePage):
         'согласие на рассылку {radio_idx}')
     def register_user(
             self, firstname, lastname, email, tel, password, confirm, radio_idx, checkbox=True):
-        """Процесс регистрации пользователя."""
+        """Процесс регистрации пользователя.
 
+        :param firstname: имя
+        :param lastname: фамилия
+        :param email: email
+        :param password: пароль
+        :param confirm: подтверждение пароля
+        :param radio_idx: согласие на рассылку
+        :param checkbox: принятие пользовательского соглашения
+        """
         if firstname:
             self.input_text(RegisterPageLocators.FIRST_NAME_FIELD, firstname)
         if lastname:
@@ -57,7 +64,6 @@ class RegisterPage(BasePage):
     @allure.step('Проверить, что выведена ошибка  - имя обязательно')
     def check_fail_register_without_firstname(self):
         """Проверка отображения ошибки регистрации без firstname."""
-
         self.is_element_visible(RegisterPageLocators.FIRST_NAME_ERROR)
         self.is_having_text(
             RegisterPageLocators.FIRST_NAME_ERROR, 'First Name must be between 1 and 32 characters!')
@@ -65,7 +71,6 @@ class RegisterPage(BasePage):
     @allure.step('Проверить, что выведена ошибка  - фамилия обязательна')
     def check_fail_register_without_lastname(self):
         """Проверка отображения ошибки регистрации без lastname."""
-
         self.is_element_visible(RegisterPageLocators.LAST_NAME_ERROR)
         self.is_having_text(
             RegisterPageLocators.LAST_NAME_ERROR, 'Last Name must be between 1 and 32 characters!')
@@ -73,7 +78,6 @@ class RegisterPage(BasePage):
     @allure.step('Проверить, что выведена ошибка  - email обязателен')
     def check_fail_register_without_email(self):
         """Проверка отображения ошибки регистрации без email."""
-
         self.is_element_visible(RegisterPageLocators.EMAIL_ERROR)
         self.is_having_text(
             RegisterPageLocators.EMAIL_ERROR, 'E-Mail Address does not appear to be valid!')
@@ -81,7 +85,6 @@ class RegisterPage(BasePage):
     @allure.step('Проверить, что выведена ошибка  - телефон обязателен')
     def check_fail_register_without_telephone(self):
         """Проверка отображения ошибки регистрации без телефона."""
-
         self.is_element_visible(RegisterPageLocators.TEL_ERROR)
         self.is_having_text(
             RegisterPageLocators.TEL_ERROR, 'Telephone must be between 3 and 32 characters!')
@@ -89,7 +92,6 @@ class RegisterPage(BasePage):
     @allure.step('Проверить, что выведена ошибка  - пароль обязателен')
     def check_fail_register_without_password(self):
         """Проверка отображения ошибки регистрации без пароля."""
-
         self.is_element_visible(RegisterPageLocators.PASSWORD_ERROR)
         self.is_having_text(
             RegisterPageLocators.PASSWORD_ERROR, 'Password must be between 4 and 20 characters!')
@@ -97,7 +99,6 @@ class RegisterPage(BasePage):
     @allure.step('Проверить, что выведена ошибка  - подтверждение пароля обязательно')
     def check_fail_register_without_confirm(self):
         """Проверка отображения ошибки регистрации без подтверждения пароля."""
-
         self.is_element_visible(RegisterPageLocators.CONFIRM_ERROR)
         self.is_having_text(
             RegisterPageLocators.CONFIRM_ERROR, 'Password confirmation does not match password!')
@@ -105,7 +106,6 @@ class RegisterPage(BasePage):
     @allure.step('Проверить, что выведена ошибка  - принятие пользовательского соглашения обязательно')
     def check_fail_register_without_accept_privacy_policy(self):
         """Проверка отображения ошибки регистрации без принятия пользовательского соглашения."""
-
         self.is_element_visible(RegisterPageLocators.PRIVACY_POLICY_ALERT)
         self.is_having_text(
             RegisterPageLocators.PRIVACY_POLICY_ALERT, 'Warning: You must agree to the Privacy Policy!')

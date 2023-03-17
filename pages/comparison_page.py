@@ -15,7 +15,6 @@ class ComparisonPage(BasePage):
 
         :param name: название товара
         """
-
         elements = self._element(ComparePageLocators.ITEM_NAMES)
         for i in range(elements.count()):
             self.is_having_text(ComparePageLocators.ITEM_NAMES, name, i)
@@ -23,7 +22,6 @@ class ComparisonPage(BasePage):
     @allure.step('Удалить все товары из сравнения')
     def del_from_compare(self):
         """Удаление всех товаров из сравнения."""
-
         elements = self._element(ComparePageLocators.REMOVE_BUTTON)
         for i in range(elements.count()):
             self.click_on_element(ComparePageLocators.REMOVE_BUTTON, i)
@@ -31,12 +29,10 @@ class ComparisonPage(BasePage):
     @allure.step('Проверить видимость успешного алерта')
     def check_success_alert(self):
         """Вывод успешного алерта."""
-
         self.is_element_visible(ComparePageLocators.ALERT_SUCCESS)
 
     @allure.step('Проверить текст на пустой странице Сравнения')
     def check_empty_compare(self):
         """Проверка текста при отсутсвии товаров в сравнении."""
-
         self.is_having_text(
             ComparePageLocators.TEXT_FOR_EMTY_COMPARE, 'You have not chosen any products to compare.')

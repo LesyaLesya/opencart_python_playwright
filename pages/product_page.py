@@ -13,7 +13,6 @@ class ProductPage(BasePage):
     @allure.step('Проверить видимость элементов на странице')
     def check_elements_visibility(self):
         """Проверка видимости элементов."""
-
         lst = [ProductPageLocators.PRODUCT_HEADER,
                ProductPageLocators.BUTTON_CART,
                ProductPageLocators.IMAGES_BLOCK,
@@ -25,19 +24,16 @@ class ProductPage(BasePage):
     @allure.step('Кликнуть по главному фото товара')
     def click_main_product_image(self):
         """Клик по главной фото товара."""
-
         self.click_on_element(ProductPageLocators.MAIN_PRODUCT_IMAGE)
 
     @allure.step('Проверить, что фото открылось во всплывающем окне')
     def check_main_image_in_window(self):
         """Проверка, что картинка открывается в окне по клику."""
-
         self.is_element_visible(ProductPageLocators.PRODUCT_IMAGE_IN_WINDOW)
 
     @allure.step('Перейти на таб Specification')
     def click_on_tab_specification(self):
         """Клик по табу Specification."""
-
         self.click_on_element(ProductPageLocators.TAB_SPECIFICATION_LINK)
         with allure.step('Проверить, что таб Specification активирован'):
             self.is_having_attr(ProductPageLocators.TAB_CLASS, 'class', 'active', 1)
@@ -45,7 +41,6 @@ class ProductPage(BasePage):
     @allure.step('Перейти на таб Reviews')
     def click_on_tab_reviews(self):
         """Клик по табу Reviews."""
-
         self.click_on_element(ProductPageLocators.TAB_REVIEWS_LINK)
         with allure.step('Проверить, что таб Reviews активирован'):
             self.is_having_attr(ProductPageLocators.TAB_CLASS, 'class', 'active', 2)
@@ -53,7 +48,6 @@ class ProductPage(BasePage):
     @allure.step('Перейти на таб Description')
     def click_on_tab_description(self):
         """Клик по табу Description."""
-
         self.click_on_element(ProductPageLocators.TAB_DESCRIPTION_LINK)
         with allure.step('Проверить, что таб Description активирован'):
             self.is_having_attr(ProductPageLocators.TAB_CLASS, 'class', 'active', 0)
@@ -61,8 +55,10 @@ class ProductPage(BasePage):
     @allure.step('Проверить заголовок товара - {name}')
     def compare_item_title_on_pages(self, name):
         """Получам название товара полученное по переданному селектору и
-        сравниваем название товара на страницах."""
+        сравниваем название товара на страницах.
 
+        :param name: название товара
+        """
         self.is_having_text(ProductPageLocators.ITEM_TITLE, name)
 
     @allure.step('Добавить товар в вишлист')
@@ -70,7 +66,6 @@ class ProductPage(BasePage):
         """Добавление товара в вишлист. Возвращает название
         добавленного товара.
         """
-
         name = self.get_text_of_element(ProductPageLocators.ITEM_TITLE)
         self.click_on_element(ProductPageLocators.WISH_LIST_BUTTON)
         return name
@@ -78,7 +73,6 @@ class ProductPage(BasePage):
     @allure.step('Кликнуть на кнопку Логина в алерте')
     def click_login_from_alert(self):
         """Клик по кнопке Логина в алерте."""
-
         self.click_on_element(ProductPageLocators.LINK_LOGIN_ALERT)
 
     @allure.step('Добавить товар в сравнение')
@@ -86,7 +80,6 @@ class ProductPage(BasePage):
         """Добавление товара в сравнение. Возвращает название
         добавленного товара.
         """
-
         name = self.get_text_of_element(ProductPageLocators.ITEM_TITLE)
         self.click_on_element(ProductPageLocators.COMPARE_BUTTON)
         return name
@@ -94,7 +87,6 @@ class ProductPage(BasePage):
     @allure.step('Кликнуть на кнопку в алерте')
     def click_link_from_alert(self):
         """Клик по кнопке Сравнения в алерте."""
-
         self.click_on_element(ProductPageLocators.LINK_ALERT)
 
     @allure.step('Добавить товар в корзину')
@@ -102,15 +94,18 @@ class ProductPage(BasePage):
         """Добавление товара в корзину. Возвращает название
         добавленного товара.
         """
-
         name = self.get_text_of_element(ProductPageLocators.ITEM_TITLE)
         self.click_on_element(ProductPageLocators.BUTTON_CART)
         return name
 
     @allure.step('Написать отзыв на товар: автор {name}, отзыв {value}, индекс оценки {idx}')
     def write_review(self, name, value, idx):
-        """ После заполнения полей и отправки формы возвращаются имя автора и текст отзыва. """
+        """После заполнения полей и отправки формы возвращаются имя автора и текст отзыва.
 
+        :param name: имя автора
+        :param value: текст отзыва
+        :param idx: индекс оценки
+        """
         self.click_on_element(ProductPageLocators.WRITE_REVIEW_BUTTON)
         self.input_text(ProductPageLocators.REVIEW_NAME_FIELD, name)
         self.input_text(ProductPageLocators.REVIEW_FIELD, value)
@@ -121,14 +116,12 @@ class ProductPage(BasePage):
     @allure.step('Проверить наличие блоков с информацией')
     def check_visibility_of_info_blocks(self):
         """Проверить наличие блоков с информацией."""
-
         self.is_element_visible(ProductPageLocators.RIGHT_BLOCK_INFO, index=0)
         self.is_element_visible(ProductPageLocators.RIGHT_BLOCK_INFO, index=1)
 
     @allure.step('Проверить поля в первом инфоблоке')
     def check_fields_in_first_info_block(self):
         """Проверить поля в первом инфоблоке."""
-
         self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, 'Brand:', index=0)
         self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, 'Product Code:', index=1)
         self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, 'Reward Points:', index=2)
@@ -137,38 +130,32 @@ class ProductPage(BasePage):
     @allure.step('Проверить наличие цены')
     def check_visibility_of_price(self):
         """Проверить наличие цены."""
-
         self.is_element_visible(ProductPageLocators.PRODUCT_PRICE)
 
     @allure.step('Проверить поля во втором инфоблоке')
     def check_fields_in_second_info_block(self):
         """Проверить поля в первом инфоблоке."""
-
         self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_SECOND, 'Ex Tax:', index=1)
 
-    @allure.step("Проверить алерт при пустом отзыве")
+    @allure.step('Проверить алерт при пустом отзыве')
     def check_error_visibility_review(self):
         """Проверить алерт при пустом отзыве."""
-
         self.is_element_visible(ProductPageLocators.REVIEW_ALERT)
 
     @allure.step('Проверить сообщение об ошибке при пустом отзыве')
     def check_error_text_empty_review(self):
         """Проверить сообщение об ошибке при пустом отзыве."""
-
         self.is_having_text(
             ProductPageLocators.REVIEW_ALERT, 'Warning: Review Text must be between 25 and 1000 characters!')
 
     @allure.step('Проверить сообщение об ошибке при пустом авторе отзыва')
     def check_error_text_empty_author_review(self):
         """Проверить сообщение об ошибке при пустом авторе отзыва."""
-
         self.is_having_text(
             ProductPageLocators.REVIEW_ALERT, 'Warning: Review Name must be between 3 and 25 characters!')
 
     @allure.step('Проверить сообщение об ошибке при пустом рейтинге отзыва')
     def check_error_text_empty_rating_review(self):
         """Проверить сообщение об ошибке при пустом рейтинге отзыва."""
-
         self.is_having_text(
             ProductPageLocators.REVIEW_ALERT, 'Warning: Please select a review rating!')

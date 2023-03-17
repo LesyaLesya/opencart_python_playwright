@@ -13,7 +13,6 @@ class SearchPage(BasePage):
     @allure.step('Проверить видимость элементов на странице')
     def check_elements_visibility(self):
         """Проверка видимости элементов."""
-
         lst = [SearchPageLocators.SEARCH_INPUT,
                SearchPageLocators.SEARCH_BUTTON,
                SearchPageLocators.SELECT_CATEGORY,
@@ -28,15 +27,16 @@ class SearchPage(BasePage):
 
         :param value: искомое значение
         """
-
         self.input_text(SearchPageLocators.SEARCH_INPUT, value)
         self.click_on_element(SearchPageLocators.SEARCH_BUTTON)
 
     @allure.step('Проверить искомое значение {value} в названиях товаров')
     def check_item_from_search_result(self, value):
         """Получение всех товаров из результата поиска и проверка,
-        что искомое значение содержится в названии товара."""
+        что искомое значение содержится в названии товара.
 
+        :param value: искомое значение
+        """
         elements = self._element(SearchPageLocators.PRODUCT_NAME)
         # print(elements.all_inner_texts())
         for i in range(elements.count()):
@@ -45,7 +45,6 @@ class SearchPage(BasePage):
     @allure.step('Проверить, что поиск выдал 0 результатов.')
     def check_empty_search_result(self):
         """Получение пустого результата поиска."""
-
         self.is_having_text(
                 SearchPageLocators.EMPTY_RESULT, "There is no product that matches the search criteria.")
 
@@ -55,5 +54,4 @@ class SearchPage(BasePage):
 
         :param value: значения в выпадающем списке
         """
-
         self.select_products(SearchPageLocators.SELECT_CATEGORY, value=value)

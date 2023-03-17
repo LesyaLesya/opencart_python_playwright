@@ -86,7 +86,6 @@ class BasePage:
 
         :param el_path: путь до элемента
         """
-
         return self._element(el_path).select_option(**kwargs)
 
     @allure.step('Получить атрибут {attr} у элемента {el_path} с индексом {index}')
