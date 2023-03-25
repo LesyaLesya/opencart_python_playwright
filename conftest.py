@@ -22,7 +22,7 @@ def pytest_addoption(parser):
         '--devices', action='store', required=False, help='Укажите девайс - iPhone 12, iPhone 11, Pixel 2')
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def get_playwright():
     """Возвращает сущность playwright."""
     with sync_playwright() as playwright:
@@ -68,7 +68,7 @@ def browser(get_playwright, request):
     driver.close()
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def db_connection(request):
     """Подключение к БД."""
     db_host = request.config.getoption('--url')
@@ -98,7 +98,7 @@ def pytest_runtest_makereport(item):
     setattr(item, f'result_{result.when}', result)
 
 
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(autouse=True)
 def make_screenshots(request, browser):
     """Создание скриншота при падении теста и его прикрепление к отчету."""
     yield
