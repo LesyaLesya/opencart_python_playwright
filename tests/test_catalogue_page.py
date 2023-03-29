@@ -7,6 +7,7 @@ import pytest
 from helpers.locators import CataloguePageLocators
 from helpers.urls import URLS
 from pages.account_page import AccountPage
+from pages.alert_page import AlertPage
 from pages.catalogue_page import CataloguePage
 from pages.comparison_page import ComparisonPage
 from pages.header_page import HeaderPage
@@ -112,14 +113,16 @@ class TestCataloguePage:
         page = CataloguePage(browser, url)
         page.open_url(path=URLS.CATALOGUE_PAGE)
         name = page.add_to_wishlist(idx)
-        page.click_login_from_alert()
-        login_url = page.get_current_url()
+        alert_url = page.get_current_url()
+        alert_page = AlertPage(browser, alert_url)
+        alert_page.click_login_from_alert()
+        login_url = alert_page.get_current_url()
         login_page = LoginPage(browser, login_url, db_connection)
         login_page.login_user()
         account_url = login_page.get_current_url()
         account_page = AccountPage(browser, account_url)
         account_page.open_wishlist()
-        account_page.check_item_in_wish_list(name)
+        account_page.check_item_in_wish_list(name, 0)
 
     @allure.story('Добавление товара в сравнение')
     @allure.title('Добавление товара в сравнение из каталога')
@@ -140,7 +143,7 @@ class TestCataloguePage:
         page.go_to_compare_page()
         compare_url = page.get_current_url()
         compare_page = ComparisonPage(browser, compare_url)
-        compare_page.check_item_in_comparison(name)
+        compare_page.check_item_in_comparison(name, 0)
 
     @allure.story('Переключение вида отображения карточек товара')
     @allure.title('Переключение вида отображения карточек товара')

@@ -1,6 +1,16 @@
 """Модуль с локаторами элементов."""
 
 
+class AlertsLocators:
+    """Локаторы алертов."""
+
+    LINK_LOGIN_ALERT = 'div.alert-success > i + a'
+    LINK_ALERT = 'div.alert-success > a + a'
+    FAIL_LOGIN_ALERT = '.alert-danger'
+    DANGER_ALERT = '.alert.alert-danger.alert-dismissible'
+    SUCCESS_ALERT = 'div.alert-success'
+
+
 class HeaderPageLocators:
     """Локаторы для шапки сайта."""
 
@@ -56,10 +66,8 @@ class ProductPageLocators:
     TAB_SPECIFICATION_LINK = '//a[@href="#tab-specification"]'
     TAB_REVIEWS_LINK = '//a[@href="#tab-review"]'
     ITEM_TITLE = '.col-sm-4 > .btn-group + h1'
-    LINK_LOGIN_ALERT = 'div.alert-success > i + a'
     WISH_LIST_BUTTON = '//button[@data-original-title="Add to Wish List"]'
     COMPARE_BUTTON = '//div[@class="btn-group"]/button[@data-original-title="Compare this Product"]'
-    LINK_ALERT = 'div.alert-success > a + a'
     WRITE_REVIEW_BUTTON = '//a[text()="Write a review"]'
     REVIEW_NAME_FIELD = '#input-name'
     REVIEW_FIELD = '#input-review'
@@ -69,7 +77,6 @@ class ProductPageLocators:
     ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST = '//div[@class="col-sm-4"]/ul[@class="list-unstyled"][1]/li'
     ELEMENTS_OF_RIGHT_BLOCK_INFO_SECOND = '//div[@class="col-sm-4"]/ul[@class="list-unstyled"][2]/li'
     PRODUCT_PRICE = '//div[@class="col-sm-4"]/ul[@class="list-unstyled"][2]/li/h2'
-    REVIEW_ALERT = '.alert.alert-danger.alert-dismissible'
 
 
 class CataloguePageLocators:
@@ -81,12 +88,10 @@ class CataloguePageLocators:
     LEFT_MENU = '#column-left'
     BANNER_UNDER_LEFT_MENU = '#banner0'
     COMPARE_BUTTON = '//button[@data-original-title="Compare this Product"]'
-    ALERT_SUCCESS_COMPARE = '.alert-success'
     COMPARE_LINK = '#compare-total'
     SELECT_SORT = '#input-sort'
     ITEM_NAME = '.caption > h4 > a'
     ITEM_PRICE = '.caption > h4 + p + p.price'
-    LOGIN_LINK_IN_ALERT = 'div.alert-success > i + a'
     WISH_LIST_BUTTON = '//button[@data-original-title="Add to Wish List"]'
     ITEM_CART = 'div.row > div.product-layout'
     LIST_VIEW_BUTTON = '#list-view'
@@ -113,7 +118,6 @@ class LoginPageLocators:
     EMAIL_INPUT = '#input-email'
     PASSWORD_INPUT = '#input-password'
     LOGIN_BUTTON = '//input[@value="Login"]'
-    FAIL_LOGIN_ALERT = 'i.fa-exclamation-circle'
 
 
 class RegisterPageLocators:
@@ -138,7 +142,6 @@ class RegisterPageLocators:
     TEL_ERROR = '#input-telephone + .text-danger'
     PASSWORD_ERROR = '#input-password + .text-danger'
     CONFIRM_ERROR = '#input-confirm + .text-danger'
-    PRIVACY_POLICY_ALERT = '.alert.alert-danger.alert-dismissible'
 
 
 class AdminPageLocators:
@@ -154,7 +157,6 @@ class AdminPageLocators:
     LEFT_MENU_CATALOGUE = '#menu-catalog > a'
     LEFT_MENU_PRODUCTS = '#collapse1 > li:nth-child(2) > a'
     PRODUCTS_TABLE = '.table-responsive'
-    FAIL_LOGIN_ALERT = '.alert-danger'
 
 
 class SearchPageLocators:
@@ -186,8 +188,8 @@ class ComparePageLocators:
 
     ITEM_NAMES = 'h1 + table > tbody > tr > td > a > strong'
     REMOVE_BUTTON = 'a.btn-danger'
-    ALERT_SUCCESS = 'div.alert-success'
     TEXT_FOR_EMTY_COMPARE = '#content > h1 + p'
+    ADD_TO_CART_BUTTON = 'input.btn-primary'
 
 
 class CartPageLocators:

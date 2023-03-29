@@ -4,6 +4,7 @@ import allure
 import pytest
 
 from helpers.urls import URLS
+from pages.alert_page import AlertPage
 from pages.cart_page import CartPage
 from pages.main_page import MainPage
 from pages.product_page import ProductPage
@@ -27,7 +28,9 @@ class TestCartPage:
         product_page = ProductPage(browser, url)
         product_page.open_url(path=URLS.PRODUCT_PAGE)
         product_page.add_to_cart()
-        product_page.click_link_from_alert()
+        alert_url = product_page.get_current_url()
+        alert_page = AlertPage(browser, alert_url)
+        alert_page.click_link_from_alert()
         cart_url = product_page.get_current_url()
         cart_page = CartPage(browser, cart_url)
         cart_page.remove_product_from_cart()
@@ -47,7 +50,9 @@ class TestCartPage:
         product_page = ProductPage(browser, url)
         product_page.open_url(path=URLS.PRODUCT_PAGE)
         product_page.add_to_cart()
-        product_page.click_link_from_alert()
+        alert_url = product_page.get_current_url()
+        alert_page = AlertPage(browser, alert_url)
+        alert_page.click_link_from_alert()
         cart_url = product_page.get_current_url()
         cart_page = CartPage(browser, cart_url)
         cart_page.update_price(value)
@@ -65,7 +70,9 @@ class TestCartPage:
         product_page = ProductPage(browser, url)
         product_page.open_url(path=URLS.PRODUCT_PAGE)
         product_page.add_to_cart()
-        product_page.click_link_from_alert()
+        alert_url = product_page.get_current_url()
+        alert_page = AlertPage(browser, alert_url)
+        alert_page.click_link_from_alert()
         cart_url = product_page.get_current_url()
         cart_page = CartPage(browser, cart_url)
         cart_page.click_continue_shopping()

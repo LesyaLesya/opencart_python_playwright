@@ -6,6 +6,7 @@ import pytest
 
 from helpers.urls import URLS
 from pages.admin_page import AdminPage
+from pages.alert_page import AlertPage
 
 
 @allure.feature('Административная страница')
@@ -56,7 +57,9 @@ class TestAdminPage:
         page = AdminPage(browser, url)
         page.open_url(path=URLS.ADMIN_PAGE)
         page.login(login, passw)
-        page.check_fail_login_alert()
+        alert_url = page.get_current_url()
+        alert_page = AlertPage(browser, alert_url)
+        alert_page.check_fail_login_alert()
 
     @allure.story('Выход из админки')
     @allure.title('Выход из админки')

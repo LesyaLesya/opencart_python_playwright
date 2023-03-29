@@ -10,15 +10,24 @@ class CartPage(BasePage):
     """Класс с методами для страницы корзины."""
 
     @allure.step('Проверить, что товар в корзине')
-    def check_item_in_cart(self, name):
+    def check_item_in_cart(self, name, idx):
         """Проверка видимости товара в корзине.
 
         :param name: название товара
+        :param idx: порядковый индекс
+        """
+        self.is_having_text(CartPageLocators.ITEM_NAMES, name, idx)
+
+    @allure.step('Проверить, сколько товаров в корзине')
+    def check_quantity_of_items_in_cart(self, value):
+        """Проверка видимости товара в корзине.
+
+        :param value: количество товаров в корзине
         """
         elements = self._element(CartPageLocators.ITEM_NAMES)
-        for i in range(elements.count()):
-            with allure.step(f'Проверить, что продукт с индексом {i} в корзине'):
-                self.is_having_text(CartPageLocators.ITEM_NAMES, name, i)
+        quantity = elements.count()
+        with allure.step(f'Проверить, что в корзине {value} товаров'):
+            assert quantity == value, f'Товаров в корзине {quantity}, ожидаем {value}'
 
     @allure.step('Удалить товар из корзины')
     def remove_product_from_cart(self):

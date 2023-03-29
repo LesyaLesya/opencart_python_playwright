@@ -16,14 +16,13 @@ class AccountPage(BasePage):
         self.click_on_element(AccountPageLocators.WISH_LIST_LINK)
 
     @allure.step('Проверить, что товар в виш-листе')
-    def check_item_in_wish_list(self, name):
+    def check_item_in_wish_list(self, name, idx):
         """Проверка видимости товара в вишлисте.
 
         :param name: название товара
+        :param idx: порядковый индекс
         """
-        elements = self._element(AccountPageLocators.ITEM_NAMES)
-        for i in range(elements.count()):
-            self.is_having_text(AccountPageLocators.ITEM_NAMES, name, i)
+        self.is_having_text(AccountPageLocators.ITEM_NAMES, name, idx)
 
     @allure.step('Выполнить логаут из правого блока')
     def logout_from_right_block(self,):

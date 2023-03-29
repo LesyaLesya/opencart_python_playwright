@@ -6,6 +6,7 @@ import pytest
 
 from helpers.urls import URLS
 from pages.account_page import AccountPage
+from pages.alert_page import AlertPage
 from pages.login_page import LoginPage
 
 
@@ -59,7 +60,9 @@ class TestLoginPage:
         page = LoginPage(browser, url)
         page.open_url(path=URLS.LOGIN_PAGE)
         page.login_user(email=email, create=False)
-        page.check_fail_login()
+        alert_url = page.get_current_url()
+        alert_page = AlertPage(browser, alert_url)
+        alert_page.check_fail_login_alert()
 
     @allure.story('Проверка авторизации в ЛК')
     @allure.title('Неуспешная авторизация - невалидный пароль')
@@ -77,4 +80,6 @@ class TestLoginPage:
         page = LoginPage(browser, url, db_connection)
         page.open_url(path=URLS.LOGIN_PAGE)
         page.login_user(password=passw, clr=True)
-        page.check_fail_login()
+        alert_url = page.get_current_url()
+        alert_page = AlertPage(browser, alert_url)
+        alert_page.check_fail_login_alert()
