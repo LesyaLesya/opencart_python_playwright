@@ -7,7 +7,6 @@ import pytest
 from helpers.db_helper import check_review_in_db, check_review_not_in_db
 from helpers.urls import URLS
 from pages.account_page import AccountPage
-from pages.alert_page import AlertPage
 from pages.cart_page import CartPage
 from pages.comparison_page import ComparisonPage
 from pages.login_page import LoginPage
@@ -77,10 +76,8 @@ class TestProductPage:
         page = ProductPage(browser, url)
         page.open_url(path=URLS.PRODUCT_PAGE)
         name = page.add_to_wishlist()
-        alert_url = page.get_current_url()
-        alert_page = AlertPage(browser, alert_url)
-        alert_page.click_login_from_alert()
-        login_url = alert_page.get_current_url()
+        page.alert.click_login_from_alert()
+        login_url = page.get_current_url()
         login_page = LoginPage(browser, login_url, db_connection)
         login_page.login_user()
         account_url = login_page.get_current_url()
@@ -101,10 +98,8 @@ class TestProductPage:
         page = ProductPage(browser, url)
         page.open_url(path=URLS.PRODUCT_PAGE)
         name = page.add_to_compare()
-        alert_url = page.get_current_url()
-        alert_page = AlertPage(browser, alert_url)
-        alert_page.click_link_from_alert()
-        compare_url = alert_page.get_current_url()
+        page.alert.click_link_from_alert()
+        compare_url = page.get_current_url()
         compare_page = ComparisonPage(browser, compare_url)
         compare_page.check_item_in_comparison(name, 0)
 
@@ -121,10 +116,8 @@ class TestProductPage:
         page = ProductPage(browser, url)
         page.open_url(path=URLS.PRODUCT_PAGE)
         name = page.add_to_cart()
-        alert_url = page.get_current_url()
-        alert_page = AlertPage(browser, alert_url)
-        alert_page.click_link_from_alert()
-        cart_url = alert_page.get_current_url()
+        page.alert.click_link_from_alert()
+        cart_url = page.get_current_url()
         cart_page = CartPage(browser, cart_url)
         cart_page.check_item_in_cart(name, 0)
         cart_page.check_quantity_of_items_in_cart(1)
@@ -182,10 +175,8 @@ class TestProductPage:
         page = ProductPage(browser, url)
         page.open_url(path=URLS.PRODUCT_PAGE)
         page.write_review('TEST1', '', 4)
-        alert_url = page.get_current_url()
-        alert_page = AlertPage(browser, alert_url)
-        alert_page.check_error_visibility_review()
-        alert_page.check_error_text_empty_review()
+        page.alert.check_danger_alert()
+        page.alert.check_error_text('Warning: Review Text must be between 25 and 1000 characters!')
         check_review_not_in_db(db_connection, 'TEST1', '')
 
     @allure.story('Написание отзыва на товар')
@@ -201,10 +192,8 @@ class TestProductPage:
         page = ProductPage(browser, url)
         page.open_url(path=URLS.PRODUCT_PAGE)
         page.write_review('', 'Good ithem. I really like it. Great!', 4)
-        alert_url = page.get_current_url()
-        alert_page = AlertPage(browser, alert_url)
-        alert_page.check_error_visibility_review()
-        alert_page.check_error_text_empty_author_review()
+        page.alert.check_danger_alert()
+        page.alert.check_error_text('Warning: Review Name must be between 3 and 25 characters!')
         check_review_not_in_db(db_connection, '', 'Good ithem. I really like it. Great!')
 
     @allure.story('Написание отзыва на товар')
@@ -220,8 +209,6 @@ class TestProductPage:
         page = ProductPage(browser, url)
         page.open_url(path=URLS.PRODUCT_PAGE)
         page.write_review('TEST1', 'Good ithem. I really like it. Great!', None)
-        alert_url = page.get_current_url()
-        alert_page = AlertPage(browser, alert_url)
-        alert_page.check_error_visibility_review()
-        alert_page.check_error_text_empty_rating_review()
+        page.alert.check_danger_alert()
+        page.alert.check_error_text('Warning: Please select a review rating!')
         check_review_not_in_db(db_connection, 'TEST1', 'Good ithem. I really like it. Great!')

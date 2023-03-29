@@ -3,6 +3,8 @@
 import allure
 from playwright.sync_api import expect
 
+from pages.common.alert import Alert
+
 
 class BasePage:
     """Класс, описывающий базовую страницу."""
@@ -17,6 +19,7 @@ class BasePage:
         self.browser = browser
         self.url = url
         self.db_connection = db_connection
+        self.alert = Alert(self.browser)
 
     def open_url(self, path='/'):
         """Открытие url.

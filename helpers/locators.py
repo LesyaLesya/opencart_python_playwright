@@ -4,9 +4,8 @@
 class AlertsLocators:
     """Локаторы алертов."""
 
-    LINK_LOGIN_ALERT = 'div.alert-success > i + a'
-    LINK_ALERT = 'div.alert-success > a + a'
-    FAIL_LOGIN_ALERT = '.alert-danger'
+    LINK_LOGIN_ALERT = 'i + a'
+    LINK_ALERT = 'a + a'
     DANGER_ALERT = '.alert.alert-danger.alert-dismissible'
     SUCCESS_ALERT = 'div.alert-success'
 

@@ -5,7 +5,6 @@ import allure
 import pytest
 
 from helpers.urls import URLS
-from pages.alert_page import AlertPage
 from pages.cart_page import CartPage
 from pages.catalogue_page import CataloguePage
 from pages.comparison_page import ComparisonPage
@@ -34,9 +33,7 @@ class TestComparisonPage:
         compare_url = catalogue_page.get_current_url()
         compare_page = ComparisonPage(browser, compare_url)
         compare_page.del_from_compare()
-        alert_url = compare_page.get_current_url()
-        alert_page = AlertPage(browser, alert_url)
-        alert_page.check_success_alert()
+        compare_page.alert.check_success_alert()
         compare_page.check_empty_compare()
 
     @allure.story('Товары в сравнении')
@@ -56,11 +53,9 @@ class TestComparisonPage:
         compare_url = catalogue_page.get_current_url()
         compare_page = ComparisonPage(browser, compare_url)
         compare_page.add_to_cart_from_compare(1)
-        alert_url = compare_page.get_current_url()
-        alert_page = AlertPage(browser, alert_url)
-        alert_page.check_success_alert()
-        alert_page.click_link_from_alert()
-        cart_url = alert_page.get_current_url()
+        compare_page.alert.check_success_alert()
+        compare_page.alert.click_link_from_alert()
+        cart_url = compare_page.get_current_url()
         cart_page = CartPage(browser, cart_url)
         cart_page.check_item_in_cart(item_name, 0)
         cart_page.check_quantity_of_items_in_cart(1)
