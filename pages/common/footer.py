@@ -1,14 +1,15 @@
-"""Модуль c методами для Подвала сайта."""
-
-
 import allure
 
 from helpers.locators import FooterPageLocators
-from pages.base_page import BasePage
 
 
-class FooterPage(BasePage):
-    """Класс с методами для подвала сайта."""
+class Footer:
+    def __init__(self, browser):
+        self.browser = browser
+
+    @property
+    def footer_links(self):
+        return self.browser.locator(FooterPageLocators.LINKS)
 
     @allure.step('Проверить ссылки в подвале')
     def check_footer_links(self, lst):
@@ -16,7 +17,6 @@ class FooterPage(BasePage):
 
         :param lst: список названий ссылок
         """
-        elements = self._element(FooterPageLocators.LINKS)
-        links_text = [self.get_text_of_element(FooterPageLocators.LINKS, index=i) for i in range(elements.count())]
+        links_text = [(self.footer_links.nth(i)).text_content() for i in range(self.footer_links.count())]
         with allure.step(f'Проверить, что тексты ссылок {links_text} совпадают с {lst}'):
             assert links_text == lst, f'Список ссылок - {links_text}, ОР - {lst}'

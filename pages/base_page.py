@@ -4,6 +4,8 @@ import allure
 from playwright.sync_api import expect
 
 from pages.common.alert import Alert
+from pages.common.footer import Footer
+from pages.common.header import Header
 
 
 class BasePage:
@@ -20,6 +22,8 @@ class BasePage:
         self.url = url
         self.db_connection = db_connection
         self.alert = Alert(self.browser)
+        self.footer = Footer(self.browser)
+        self.header = Header(self.browser)
 
     def open_url(self, path='/'):
         """Открытие url.
