@@ -129,6 +129,17 @@ class BasePage:
         element = self._element(el_path, index)
         return expect(element).to_have_text(value)
 
+    @allure.step('Проверить, что инпут {el_path} с индексом {index} имеет текст {value}')
+    def is_having_value(self, el_path, value, index=None):
+        """Возвращает проверку текста в инпуте.
+
+        :param el_path: путь до элемента
+        :param value: текст
+        :param index: порядковый индекс элемента
+        """
+        element = self._element(el_path, index)
+        return expect(element).to_have_value(value)
+
     @allure.step('Проверить, что элемент {el_path} с индексом {index} содержит текст {value}')
     def is_contain_text(self, el_path, value, index=None, case=True):
         """Возвращает проверку содержания текста у элемента.

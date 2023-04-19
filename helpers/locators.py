@@ -174,12 +174,33 @@ class AccountPageLocators:
     """Локаторы для страницы аккаунта пользователя."""
 
     WISH_LIST_LINK = '//div[@id="content"]/ul[1]/li[4]/a'
-    ITEM_NAMES = '#content > div > table > tbody > tr >td.text-left > a'
     LOGOUT_RIGHT_BLOCK = '//div[@class="list-group"]/a[contains(text(), "Logout")]'
+    MY_ACCOUNT_RIGHT_BLOCK = '//div[@class="list-group"]/a[contains(text(), "My Account")]'
+    EDIT_ACCOUNT_RIGHT_BLOCK = '//div[@class="list-group"]/a[contains(text(), "Edit Account")]'
+
+
+class WishlistPageLocators:
+    """Локаторы для страницы вишлиста аккаунта пользователя."""
+
+    ITEM_NAMES = '#content > div > table > tbody > tr >td.text-left > a'
+
+
+class LogoutPageLocators:
+    """Локаторы для страницы логаута аккаунта пользователя."""
+
     TEXT_AFTER_LOGOUT = 'h1 + p'
     LOGIN_RIGHT_BLOCK = '//div[@class="list-group"]/a[contains(text(), "Login")]'
     REGISTER_RIGHT_BLOCK = '//div[@class="list-group"]/a[contains(text(), "Register")]'
-    MY_ACCOUNT_RIGHT_BLOCK = '//div[@class="list-group"]/a[contains(text(), "My Account")]'
+
+
+class EditAccountPageLocators:
+    """Локаторы для страницы редактирования аккаунта пользователя."""
+
+    SUBMIT_BUTTON = 'input[type="submit"]'
+    FIRSTNAME_FIELD = '#input-firstname'
+    LASTNAME_FIELD = '#input-lastname'
+    EMAIL_INPUT = '#input-email'
+    TELEPHONE_INPUT = '#input-telephone'
 
 
 class ComparePageLocators:

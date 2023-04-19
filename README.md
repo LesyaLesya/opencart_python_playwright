@@ -77,7 +77,7 @@ pip install -r requirements.txt
 - Запустить выполнение тестов:
 
 ```
-pytest --url=your_external_ip -n=2 --browser_name=firefox --devices='iPhone 12' --head
+pytest --url=your_external_ip -n=2 --browser_name=firefox --devices='iPhone 12' --head tests/
 ```
 где:
 - -n (необязательно) - во сколько потоков запускать тесты, если не указывать параметр при запуске - тесты будут запущены в 1 поток.

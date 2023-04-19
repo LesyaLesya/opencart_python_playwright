@@ -4,10 +4,12 @@ import allure
 import pytest
 import mysql.connector
 
+from faker import Faker
 from playwright.sync_api import sync_playwright
 from types import SimpleNamespace
 
 from helpers import allure_helper
+from helpers import db_queries
 
 
 def pytest_addoption(parser):
@@ -106,3 +108,55 @@ def make_screenshots(request, browser):
         allure.attach(body=browser.screenshot(full_page=True),
                       name=f'{request.node.nodeid}.png',
                       attachment_type=allure.attachment_type.PNG)
+
+
+@pytest.fixture
+def do_fake():
+    fake = Faker(['en_US'])
+    return fake
+
+@pytest.fixture
+def delete_user(db_connection):
+    """Фикстура, удаляющая пользователя."""
+    def __del_user_from_bd(email, firstname, lastname, telephone):
+        return db_queries.delete_user(db_connection, email, firstname, lastname, telephone)
+    return __del_user_from_bd
+
+
+@pytest.fixture
+def create_user(db_connection, do_fake):
+    """Фикстура, создающая пользователя."""
+    @allure.step(
+        'Создать пользователя: firstname={firstname}, lastname={lastname}, email={email}, telephone={telephone}')
+    def __create_user(email=None, firstname=None, lastname=None, telephone=None):
+        if email is None:
+            email = do_fake.ascii_free_email()
+        else:
+            email = email
+
+        if firstname is None:
+            firstname = do_fake.first_name()
+        else:
+            firstname = firstname
+
+        if lastname is None:
+            lastname = do_fake.last_name()
+        else:
+            lastname = lastname
+
+        if telephone is None:
+            telephone = do_fake.phone_number()
+        else:
+            telephone = telephone
+
+        db_queries.create_test_user(db_connection, email, firstname, lastname, telephone)
+        return email, firstname, lastname, telephone
+    return __create_user
+
+
+@pytest.fixture
+def fixture_create_delete_user(create_user, delete_user):
+    """Фикстура создания и удаления пользователя."""
+    email, firstname, lastname, telephone = create_user()
+    yield email, firstname, lastname, telephone
+    delete_user(email, firstname, lastname, telephone)

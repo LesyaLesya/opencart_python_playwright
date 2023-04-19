@@ -6,10 +6,9 @@ import pytest
 
 from helpers.locators import CataloguePageLocators
 from helpers.urls import URLS
-from pages.account_page import AccountPage
+from pages.account_page import LoginPage, WishlistPage
 from pages.catalogue_page import CataloguePage
 from pages.comparison_page import ComparisonPage
-from pages.login_page import LoginPage
 from pages.product_page import ProductPage
 
 
@@ -99,26 +98,27 @@ class TestCataloguePage:
     @allure.title('Добавление товара в Виш-лист из каталога')
     @allure.link('#', name='User story')
     @pytest.mark.parametrize('idx', [0])
-    def test_adding_to_wish_list_from_catalogue(self, browser, url, db_connection, idx):
+    def test_adding_to_wish_list_from_catalogue(self, browser, url, fixture_create_delete_user, idx):
         """Тестовая функция для проверки добавления продукта
         в виш-лист из каталога.
 
         :param browser: фикстура для запуска драйвера
         :param url: фикстура с урлом тестируемого ресурса
-        :param db_connection: фикстура коннекта к БД
+        :param fixture_create_delete_user: фикстура создания и удаления тестового пользователя
         :param idx: порядковый индекс элемента
         """
+        email, firstname, lastname, telephone = fixture_create_delete_user
         page = CataloguePage(browser, url)
         page.open_url(path=URLS.CATALOGUE_PAGE)
         name = page.add_to_wishlist(idx)
         page.alert.click_login_from_alert()
         login_url = page.get_current_url()
-        login_page = LoginPage(browser, login_url, db_connection)
-        login_page.login_user()
-        account_url = login_page.get_current_url()
-        account_page = AccountPage(browser, account_url)
-        account_page.open_wishlist()
-        account_page.check_item_in_wish_list(name, 0)
+        login_page = LoginPage(browser, login_url)
+        login_page.login_user(email)
+        wishlist_url = login_page.get_current_url()
+        wishlist_page = WishlistPage(browser, wishlist_url)
+        wishlist_page.open_wishlist()
+        wishlist_page.check_item_in_wish_list(name, 0)
 
     @allure.story('Добавление товара в сравнение')
     @allure.title('Добавление товара в сравнение из каталога')
