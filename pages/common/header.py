@@ -148,3 +148,14 @@ class Header:
             if element == value:
                 with allure.step(f'Кликнуть по значению валюты {value}'):
                     self.currency_dropdown_values.nth(i).click()
+
+    def check_dropdown_menu(self, lst):
+        """Проверка выпадающих списков горизонтального меню.
+
+        :param lst: список локторов пунктов меню и выпадающих списков меню
+        """
+        for i in lst:
+            with allure.step(f'Навести курсок на пункт меню {i[0]}'):
+                self.browser.locator(i[0]).nth(0).hover()
+            with allure.step(f'Проверить выпадающее меню {i[1]}'):
+                expect(self.browser.locator(i[1])).to_be_visible()
