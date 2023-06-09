@@ -39,6 +39,11 @@ class Alert:
             expect(self.danger_alert).to_have_text(txt)
 
     @allure.step('Проверить видимость успешного алерта')
-    def check_success_alert(self):
+    def check_success_alert(self, txt=None):
         """Вывод успешного алерта."""
         expect(self.success_alert).to_be_visible()
+        if txt:
+            success_text = self.success_alert.text_content()
+            res = success_text.replace('×', '').strip()
+            with allure.step(f'Проверить, что текст - {txt}'):
+                assert res == txt, f'Текст - {res}'

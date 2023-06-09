@@ -173,7 +173,7 @@ class SearchPageLocators:
 class AccountPageLocators:
     """Локаторы для страницы аккаунта пользователя."""
 
-    WISH_LIST_LINK = '//div[@id="content"]/ul[1]/li[4]/a'
+    WISH_LIST_LINK = '#wishlist-total'
     LOGOUT_RIGHT_BLOCK = '//div[@class="list-group"]/a[contains(text(), "Logout")]'
     MY_ACCOUNT_RIGHT_BLOCK = '//div[@class="list-group"]/a[contains(text(), "My Account")]'
     EDIT_ACCOUNT_RIGHT_BLOCK = '//div[@class="list-group"]/a[contains(text(), "Edit Account")]'
@@ -183,6 +183,8 @@ class WishlistPageLocators:
     """Локаторы для страницы вишлиста аккаунта пользователя."""
 
     ITEM_NAMES = '#content > div > table > tbody > tr >td.text-left > a'
+    EMPTY_WISHLIST_TEXT = 'h2 + p'
+    REMOVE_BUTTON = 'a.btn-danger'
 
 
 class LogoutPageLocators:
@@ -201,6 +203,7 @@ class EditAccountPageLocators:
     LASTNAME_FIELD = '#input-lastname'
     EMAIL_INPUT = '#input-email'
     TELEPHONE_INPUT = '#input-telephone'
+    BACK_BUTTON = 'a.btn-default'
 
 
 class ComparePageLocators:

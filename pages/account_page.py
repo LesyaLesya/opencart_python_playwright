@@ -35,6 +35,13 @@ class AccountPage(BasePage):
 class WishlistPage(AccountPage):
     """Класс с методами для страницы Вишлиста Аккаунта пользователя."""
 
+    @allure.step('Проверить количество товаров в вишлисте')
+    def check_len_items_in_wish_list(self, n):
+        """Проверка количества товаров в вилисте."""
+        elements = self._element(WishlistPageLocators.ITEM_NAMES)
+        with allure.step(f'Проверить, что в вишлисте {n} товаров'):
+            assert elements.count() == n, f'Количество товаров - {elements.count()}'
+
     @allure.step('Проверить, что товар в виш-листе')
     def check_item_in_wish_list(self, name, idx):
         """Проверка видимости товара в вишлисте.
@@ -43,6 +50,22 @@ class WishlistPage(AccountPage):
         :param idx: порядковый индекс
         """
         self.is_having_text(WishlistPageLocators.ITEM_NAMES, name, idx)
+
+    @allure.step('Проверить, что вишлист пустой')
+    def check_empty_wish_list(self):
+        """Проверка, что вишлист пустой."""
+        self.is_having_text(
+            WishlistPageLocators.EMPTY_WISHLIST_TEXT, 'Your wish list is empty.')
+
+    @allure.step('Удалить товары из вишлиста')
+    def del_items_from_wish_list(self, all=False, idx=0):
+        """Проверка удаления из вишлиста."""
+        if all:
+            elements = self._element(WishlistPageLocators.REMOVE_BUTTON)
+            for i in range(elements.count()):
+                self.click_on_element(WishlistPageLocators.REMOVE_BUTTON, i)
+        else:
+            self.click_on_element(WishlistPageLocators.REMOVE_BUTTON, idx)
 
 
 class LogoutPage(AccountPage):
@@ -217,3 +240,8 @@ class EditAccountPage(AccountPage):
     def check_phone(self, phone):
         """Получение телефона пользователя из инупта."""
         self.is_having_value(EditAccountPageLocators.TELEPHONE_INPUT, phone)
+
+    @allure.step('Нажать на кнопку назад')
+    def press_back(self):
+        """Сохранение данных аккаунта."""
+        self.click_on_element(EditAccountPageLocators.BACK_BUTTON)
