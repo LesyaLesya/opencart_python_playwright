@@ -189,3 +189,14 @@ class BasePage:
         """
         element = self._element(el_path, index)
         return expect(element).to_have_css(css_prop, value)
+
+    @allure.step('Получить id у товара {el_path} с индексом {index}')
+    def get_item_id(self, el_path, index=None):
+        """Возвращает id товара.
+
+        :param el_path: путь до элемента
+        :param index: порядковый индекс элемента
+        """
+        element = self._element(el_path, index)
+        value = element.get_attribute('onclick')
+        return int(''.join([i for i in value if i.isdigit()]))

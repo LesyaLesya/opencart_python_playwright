@@ -2,6 +2,7 @@
 
 import allure
 
+from helpers.datas import AccountTexts
 from helpers.locators import (
      AccountPageLocators, EditAccountPageLocators, LoginPageLocators,
      LogoutPageLocators, RegisterPageLocators, WishlistPageLocators)
@@ -35,37 +36,44 @@ class AccountPage(BasePage):
 class WishlistPage(AccountPage):
     """Класс с методами для страницы Вишлиста Аккаунта пользователя."""
 
-    @allure.step('Проверить количество товаров в вишлисте')
-    def check_len_items_in_wish_list(self, n):
-        """Проверка количества товаров в вилисте."""
+    @allure.step('Проверить, что товары в виш-листе')
+    def check_items_in_wish_list(self, names, n):
+        """Проверка видимости товаров в вишлисте.
+
+        :param names: названия товаров
+        :param n: количество товаров в вишлисте
+        """
         elements = self._element(WishlistPageLocators.ITEM_NAMES)
+        product_names = [self.get_text_of_element(WishlistPageLocators.ITEM_NAMES, index=i) for i in range(elements.count())]
         with allure.step(f'Проверить, что в вишлисте {n} товаров'):
             assert elements.count() == n, f'Количество товаров - {elements.count()}'
-
-    @allure.step('Проверить, что товар в виш-листе')
-    def check_item_in_wish_list(self, name, idx):
-        """Проверка видимости товара в вишлисте.
-
-        :param name: название товара
-        :param idx: порядковый индекс
-        """
-        self.is_having_text(WishlistPageLocators.ITEM_NAMES, name, idx)
+        with allure.step(f'Проверить что в {elements} есть товары {names}'):
+            if type(names) == list:
+                for i in names:
+                    assert i in product_names, f'Название {i}, названия продуктов в вишлисте {product_names}'
+            else:
+                self.is_having_text(WishlistPageLocators.ITEM_NAMES, names, 0), \
+                f'Название {names}, названия продуктов в вишлисте {product_names}'
 
     @allure.step('Проверить, что вишлист пустой')
     def check_empty_wish_list(self):
         """Проверка, что вишлист пустой."""
         self.is_having_text(
-            WishlistPageLocators.EMPTY_WISHLIST_TEXT, 'Your wish list is empty.')
+            WishlistPageLocators.EMPTY_WISHLIST_TEXT, AccountTexts.EMPTY_WISHLIST)
 
     @allure.step('Удалить товары из вишлиста')
     def del_items_from_wish_list(self, all=False, idx=0):
         """Проверка удаления из вишлиста."""
         if all:
             elements = self._element(WishlistPageLocators.REMOVE_BUTTON)
-            for i in range(elements.count()):
-                self.click_on_element(WishlistPageLocators.REMOVE_BUTTON, i)
+            all_buttons = [i for i in range(elements.count())]
+            while len(all_buttons) != 0:
+                self.click_on_element(WishlistPageLocators.REMOVE_BUTTON, idx)
+                self.alert.check_success_alert(txt=AccountTexts.WISHLIST_CHANGE)
+                all_buttons.pop(idx)
         else:
             self.click_on_element(WishlistPageLocators.REMOVE_BUTTON, idx)
+            self.alert.check_success_alert(txt=AccountTexts.WISHLIST_CHANGE)
 
 
 class LogoutPage(AccountPage):
@@ -76,8 +84,7 @@ class LogoutPage(AccountPage):
         """Проверка текста после логаута."""
         self.is_element_visible(LogoutPageLocators.TEXT_AFTER_LOGOUT)
         self.is_having_text(
-            LogoutPageLocators.TEXT_AFTER_LOGOUT,
-            'You have been logged off your account. It is now safe to leave the computer.')
+            LogoutPageLocators.TEXT_AFTER_LOGOUT, AccountTexts.LOGOUT)
 
     @allure.step('Проверить пункты в правом блоке после логаута')
     def check_right_block_after_logout(self):
@@ -171,42 +178,42 @@ class RegisterPage(AccountPage):
         """Проверка отображения ошибки регистрации без firstname."""
         self.is_element_visible(RegisterPageLocators.FIRST_NAME_ERROR)
         self.is_having_text(
-            RegisterPageLocators.FIRST_NAME_ERROR, 'First Name must be between 1 and 32 characters!')
+            RegisterPageLocators.FIRST_NAME_ERROR, AccountTexts.REGISTER_FIRST_NAME_ERROR)
 
     @allure.step('Проверить, что выведена ошибка  - фамилия обязательна')
     def check_fail_register_without_lastname(self):
         """Проверка отображения ошибки регистрации без lastname."""
         self.is_element_visible(RegisterPageLocators.LAST_NAME_ERROR)
         self.is_having_text(
-            RegisterPageLocators.LAST_NAME_ERROR, 'Last Name must be between 1 and 32 characters!')
+            RegisterPageLocators.LAST_NAME_ERROR, AccountTexts.REGISTER_LAST_NAME_ERROR)
 
     @allure.step('Проверить, что выведена ошибка  - email обязателен')
     def check_fail_register_without_email(self):
         """Проверка отображения ошибки регистрации без email."""
         self.is_element_visible(RegisterPageLocators.EMAIL_ERROR)
         self.is_having_text(
-            RegisterPageLocators.EMAIL_ERROR, 'E-Mail Address does not appear to be valid!')
+            RegisterPageLocators.EMAIL_ERROR, AccountTexts.REGISTER_EMAIL_ERROR)
 
     @allure.step('Проверить, что выведена ошибка  - телефон обязателен')
     def check_fail_register_without_telephone(self):
         """Проверка отображения ошибки регистрации без телефона."""
         self.is_element_visible(RegisterPageLocators.TEL_ERROR)
         self.is_having_text(
-            RegisterPageLocators.TEL_ERROR, 'Telephone must be between 3 and 32 characters!')
+            RegisterPageLocators.TEL_ERROR, AccountTexts.REGISTER_PHONE_ERROR)
 
     @allure.step('Проверить, что выведена ошибка  - пароль обязателен')
     def check_fail_register_without_password(self):
         """Проверка отображения ошибки регистрации без пароля."""
         self.is_element_visible(RegisterPageLocators.PASSWORD_ERROR)
         self.is_having_text(
-            RegisterPageLocators.PASSWORD_ERROR, 'Password must be between 4 and 20 characters!')
+            RegisterPageLocators.PASSWORD_ERROR, AccountTexts.REGISTER_PASSW_ERROR)
 
     @allure.step('Проверить, что выведена ошибка  - подтверждение пароля обязательно')
     def check_fail_register_without_confirm(self):
         """Проверка отображения ошибки регистрации без подтверждения пароля."""
         self.is_element_visible(RegisterPageLocators.CONFIRM_ERROR)
         self.is_having_text(
-            RegisterPageLocators.CONFIRM_ERROR, 'Password confirmation does not match password!')
+            RegisterPageLocators.CONFIRM_ERROR, AccountTexts.REGISTER_PASSW_CONFIRM_ERROR)
 
 
 class EditAccountPage(AccountPage):

@@ -103,8 +103,9 @@ class CataloguePage(BasePage):
         :param index: порядковый индекс элемента
         """
         name = self.get_text_of_element(CataloguePageLocators.ITEM_NAME, index)
+        item_id = self.get_item_id(CataloguePageLocators.WISH_LIST_BUTTON, index)
         self.click_on_element(CataloguePageLocators.WISH_LIST_BUTTON, index)
-        return name
+        return name, item_id
 
     @allure.step('Кликнуть на кнопку вида Список')
     def click_list_view(self):

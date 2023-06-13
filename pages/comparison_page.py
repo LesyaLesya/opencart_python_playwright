@@ -18,12 +18,17 @@ class ComparisonPage(BasePage):
         """
         self.is_having_text(ComparePageLocators.ITEM_NAMES, name, idx)
 
-    @allure.step('Удалить все товары из сравнения')
-    def del_from_compare(self):
-        """Удаление всех товаров из сравнения."""
-        elements = self._element(ComparePageLocators.REMOVE_BUTTON)
-        for i in range(elements.count()):
-            self.click_on_element(ComparePageLocators.REMOVE_BUTTON, i)
+    @allure.step('Удалить товары из сравнения')
+    def del_from_compare(self, all=True, idx=0):
+        """Удаление товаров из сравнения."""
+        if all:
+            elements = self._element(ComparePageLocators.REMOVE_BUTTON)
+            all_buttons = [i for i in range(elements.count())]
+            while len(all_buttons) != 0:
+                self.click_on_element(ComparePageLocators.REMOVE_BUTTON, idx)
+                all_buttons.pop(0)
+        else:
+            self.click_on_element(*ComparePageLocators.REMOVE_BUTTON, idx)
 
     @allure.step('Проверить текст на пустой странице Сравнения')
     def check_empty_compare(self):
