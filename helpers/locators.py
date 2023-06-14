@@ -31,6 +31,7 @@ class HeaderPageLocators:
     DESKTOPS_IN_MENU = '//a[text()="Desktops"]'
     COMPONENTS_IN_MENU = '//a[text()="Components"]'
     LAPTOPS_IN_MENU = '//a[text()="Laptops & Notebooks"]'
+    SHOPPING_CART_TOP_LINK = 'a[title="Shopping Cart"]'
 
 
 class MainPageLocators:

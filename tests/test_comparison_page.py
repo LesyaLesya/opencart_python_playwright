@@ -57,5 +57,4 @@ class TestComparisonPage:
         compare_page.alert.click_link_from_alert()
         cart_url = compare_page.get_current_url()
         cart_page = CartPage(browser, cart_url)
-        cart_page.check_item_in_cart(item_name, 0)
-        cart_page.check_quantity_of_items_in_cart(1)
+        cart_page.check_item_in_cart(item_name, 1)

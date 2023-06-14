@@ -14,6 +14,10 @@ class Header:
         return self.browser.locator(HeaderPageLocators.CART_BUTTON)
 
     @property
+    def cart_link(self):
+        return self.browser.locator(HeaderPageLocators.SHOPPING_CART_TOP_LINK)
+
+    @property
     def search_input(self):
         return self.browser.locator(HeaderPageLocators.SEARCH_INPUT)
 
@@ -86,7 +90,6 @@ class Header:
     @allure.step('Проверить стили кнопки корзины при наведении')
     def check_cart_button_css_hover(self):
         """Проверка стилей кнопки корзины при наведении."""
-        locator = HeaderPageLocators.CART_BUTTON
         self.cart_button.hover()
         expect(self.cart_button).to_have_css('font-size', SIZES.SIZE_12)
         expect(self.cart_button).to_have_css('line-height', SIZES.SIZE_18)
@@ -149,6 +152,7 @@ class Header:
                 with allure.step(f'Кликнуть по значению валюты {value}'):
                     self.currency_dropdown_values.nth(i).click()
 
+    @allure.step('Проверить выпадающие списки горизонтального меню')
     def check_dropdown_menu(self, lst):
         """Проверка выпадающих списков горизонтального меню.
 
@@ -159,3 +163,8 @@ class Header:
                 self.browser.locator(i[0]).nth(0).hover()
             with allure.step(f'Проверить выпадающее меню {i[1]}'):
                 expect(self.browser.locator(i[1])).to_be_visible()
+
+    @allure.step('Перейти на страницу корзины')
+    def go_to_cart_page(self):
+        """Проверка перехода на страницу корзины."""
+        self.cart_link.click()

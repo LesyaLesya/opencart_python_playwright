@@ -10,6 +10,15 @@ from pages.base_page import BasePage
 class ProductPage(BasePage):
     """Класс с методами для страницы Товара."""
 
+    TAX = 'Ex Tax:'
+    AVAIL = 'Availability:'
+    REWARD = 'Reward Points:'
+    CODE = 'Product Code:'
+    BRAND = 'Brand:'
+    REVIEW_TEXT_ERROR = 'Warning: Review Text must be between 25 and 1000 characters!'
+    REVIEW_AUTHOR_ERROR = 'Warning: Review Name must be between 3 and 25 characters!'
+    REVIEW_RATING_ERROR = 'Warning: Please select a review rating!'
+
     @allure.step('Проверить видимость элементов на странице')
     def check_elements_visibility(self):
         """Проверка видимости элементов."""
@@ -113,10 +122,10 @@ class ProductPage(BasePage):
     @allure.step('Проверить поля в первом инфоблоке')
     def check_fields_in_first_info_block(self):
         """Проверить поля в первом инфоблоке."""
-        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, 'Brand:', index=0)
-        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, 'Product Code:', index=1)
-        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, 'Reward Points:', index=2)
-        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, 'Availability:', index=3)
+        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, self.BRAND, index=0)
+        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, self.CODE, index=1)
+        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, self.REWARD, index=2)
+        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_FIRST, self.AVAIL, index=3)
 
     @allure.step('Проверить наличие цены')
     def check_visibility_of_price(self):
@@ -126,4 +135,4 @@ class ProductPage(BasePage):
     @allure.step('Проверить поля во втором инфоблоке')
     def check_fields_in_second_info_block(self):
         """Проверить поля в первом инфоблоке."""
-        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_SECOND, 'Ex Tax:', index=1)
+        self.is_contain_text(ProductPageLocators.ELEMENTS_OF_RIGHT_BLOCK_INFO_SECOND, self.TAX, index=1)

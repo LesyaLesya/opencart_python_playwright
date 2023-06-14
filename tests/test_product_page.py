@@ -120,8 +120,7 @@ class TestProductPage:
         page.alert.click_link_from_alert()
         cart_url = page.get_current_url()
         cart_page = CartPage(browser, cart_url)
-        cart_page.check_item_in_cart(name, 0)
-        cart_page.check_quantity_of_items_in_cart(1)
+        cart_page.check_item_in_cart(name, 1)
 
     @allure.story('Написание отзыва на товар')
     @allure.title('Написание отзыва на товар из карточки товара')
@@ -173,12 +172,13 @@ class TestProductPage:
         :param url: фикстура с урлом тестируемого ресурса
         :param db_connection: фикстура коннекта к БД
         """
+        name = 'TEST1'
         page = ProductPage(browser, url)
         page.open_url(path=URLS.PRODUCT_PAGE)
-        page.write_review('TEST1', '', 4)
+        page.write_review(name, '', 4)
         page.alert.check_danger_alert()
-        page.alert.check_error_text('Warning: Review Text must be between 25 and 1000 characters!')
-        check_review_not_in_db(db_connection, 'TEST1', '')
+        page.alert.check_error_text(page.REVIEW_TEXT_ERROR)
+        check_review_not_in_db(db_connection, name, '')
 
     @allure.story('Написание отзыва на товар')
     @allure.title('Нет автора отзыва')
@@ -190,12 +190,13 @@ class TestProductPage:
         :param url: фикстура с урлом тестируемого ресурса
         :param db_connection: фикстура коннекта к БД
         """
+        review = 'Good ithem. I really like it. Great!'
         page = ProductPage(browser, url)
         page.open_url(path=URLS.PRODUCT_PAGE)
-        page.write_review('', 'Good ithem. I really like it. Great!', 4)
+        page.write_review('', review, 4)
         page.alert.check_danger_alert()
-        page.alert.check_error_text('Warning: Review Name must be between 3 and 25 characters!')
-        check_review_not_in_db(db_connection, '', 'Good ithem. I really like it. Great!')
+        page.alert.check_error_text(page.REVIEW_AUTHOR_ERROR)
+        check_review_not_in_db(db_connection, '', review)
 
     @allure.story('Написание отзыва на товар')
     @allure.title('Нет рейтинга отзыва')
@@ -207,9 +208,11 @@ class TestProductPage:
         :param url: фикстура с урлом тестируемого ресурса
         :param db_connection: фикстура коннекта к БД
         """
+        name = 'TEST1'
+        review = 'Good ithem. I really like it. Great!'
         page = ProductPage(browser, url)
         page.open_url(path=URLS.PRODUCT_PAGE)
-        page.write_review('TEST1', 'Good ithem. I really like it. Great!', None)
+        page.write_review(name, review, None)
         page.alert.check_danger_alert()
-        page.alert.check_error_text('Warning: Please select a review rating!')
-        check_review_not_in_db(db_connection, 'TEST1', 'Good ithem. I really like it. Great!')
+        page.alert.check_error_text(page.REVIEW_RATING_ERROR)
+        check_review_not_in_db(db_connection, name, review)

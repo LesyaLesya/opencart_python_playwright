@@ -10,6 +10,8 @@ from pages.base_page import BasePage
 class SearchPage(BasePage):
     """Класс с методами для страницы Поиска."""
 
+    EMPTY_SEARCH = 'There is no product that matches the search criteria.'
+
     @allure.step('Проверить видимость элементов на странице')
     def check_elements_visibility(self):
         """Проверка видимости элементов."""
@@ -46,7 +48,7 @@ class SearchPage(BasePage):
     def check_empty_search_result(self):
         """Получение пустого результата поиска."""
         self.is_having_text(
-                SearchPageLocators.EMPTY_RESULT, "There is no product that matches the search criteria.")
+                SearchPageLocators.EMPTY_RESULT, self.EMPTY_SEARCH)
 
     @allure.step('В выпадающем списке выбрать значение value={value}')
     def select_category(self, value):
