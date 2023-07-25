@@ -58,9 +58,11 @@ def browser(get_playwright, request):
     else:
         assert False, 'Unsupported browser type'
     if device:
-        context = driver.new_context(**dev,)
+        context = driver.new_context(
+            **dev, record_video_dir='videos/', record_video_size={'width': 1440, 'height': 900})
     else:
-        context = driver.new_context()
+        context = driver.new_context(
+            record_video_dir='videos/', record_video_size={'width': 1440, 'height': 900})
     context.set_default_timeout(10000)
     page = context.new_page()
     allure_helper.add_allure_env(browser, device)
@@ -101,13 +103,21 @@ def pytest_runtest_makereport(item):
 
 
 @pytest.fixture(autouse=True)
-def make_screenshots(request, browser):
-    """Создание скриншота при падении теста и его прикрепление к отчету."""
+def make_attachments(request, browser):
+    """Создание скриншота при падении теста и прикрепление к отчету скриншота и видео."""
     yield
     if not request.node.result_call.passed:
         allure.attach(body=browser.screenshot(full_page=True),
                       name=f'{request.node.nodeid}.png',
                       attachment_type=allure.attachment_type.PNG)
+
+        video_path = browser.video.path()
+        browser.context.close()
+        allure.attach(
+            open(video_path, 'rb').read(),
+            name=f'{request.node.nodeid}.webm',
+            attachment_type=allure.attachment_type.WEBM
+        )
 
 
 @pytest.fixture
