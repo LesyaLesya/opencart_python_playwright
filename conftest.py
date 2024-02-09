@@ -74,7 +74,6 @@ def browser(get_playwright, request):
 
 @pytest.fixture(scope='session')
 def db_connection(request):
-    """Подключение к БД."""
     db_host = request.config.getoption('--url')
     config = SimpleNamespace(
         DB_NAME='bitnami_opencart',
@@ -90,8 +89,11 @@ def db_connection(request):
         port=config.PORT,
         database=config.DB_NAME
     )
-    request.addfinalizer(connection.close)
-    return connection
+    cursor = connection.cursor()
+    yield cursor
+    connection.commit()
+    cursor.close()
+    connection.close()
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
